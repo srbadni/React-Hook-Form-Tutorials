@@ -19,15 +19,24 @@ export const YouTubeForm = () => {
         <div>
             <h1>YouTube Form</h1>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username" {...register("username")} />
+                <input type="text" id="username" {...register("username", {
+                    required: "نام کاربری الزامی است"
+                })} />
 
                 <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" {...register("email")} />
+                <input type="email" id="email" {...register("email", {
+                    pattern: {
+                        value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                        message: "invalid format"
+                    }
+                })} />
 
                 <label htmlFor="channel">Channel</label>
-                <input type="text" id="channel" {...register("channel")} />
+                <input type="text" id="channel" {...register("channel", {
+                    required: "نام کانال الزامی است"
+                })} />
 
                 <button>Submit</button>
             </form>
