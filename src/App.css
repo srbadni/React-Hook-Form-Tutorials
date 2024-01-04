@@ -25,3 +25,13 @@ input[type="email"] {
   border-radius: 4px;
   margin-bottom: 20px;
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+  text-align: left;
+}
+
+.form-control {
+  margin-bottom: 20px;
+}
