@@ -32,6 +32,14 @@ export const YouTubeForm = () => {
                     <label htmlFor="email">E-mail</label>
                     <input type="email" id="email" {...register("email", {
                         required:"ایمیل الزامی است",
+                        validate: {
+                            notAdmin: (field) => {
+                                return (field !== "test@gmail.com" || "یک ایمیل دیگر وارد کنید");
+                            },
+                            notBlockListed: (field) => {
+                                return (!field.endsWith("baddomain.com") || "غیر قابل قبول");
+                            }
+                        },
                         pattern: {
                             value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                             message: "invalid format"
