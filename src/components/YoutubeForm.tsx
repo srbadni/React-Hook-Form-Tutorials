@@ -5,6 +5,8 @@ type FormValues = {
     username: string;
     email: string;
     channel: string;
+    age: number;
+    dob: Date;
     social: {
         twitter: string,
         facebook: string,
@@ -20,6 +22,8 @@ export const YouTubeForm = () => {
             username: "alireza",
             email: "",
             channel: "",
+            age: 0,
+            dob: new Date(),
             social: {
                 twitter: "",
                 facebook: ""
@@ -78,6 +82,20 @@ export const YouTubeForm = () => {
                         required: "نام کانال الزامی است"
                     })} />
                     <p className="error">{errors.channel?.message}</p>
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor="age">age</label>
+                    <input type="text" id="age" {...register("age", {
+                        valueAsNumber: true
+                    })} />
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor="dob">dob</label>
+                    <input type="date" id="dob" {...register("dob", {
+                        valueAsDate: true
+                    })} />
                 </div>
 
                 <div className="form-control">
