@@ -1,6 +1,5 @@
 import {useForm, useFieldArray} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
-import {useEffect} from "react";
 
 type FormValues = {
     username: string;
@@ -34,21 +33,15 @@ export const YouTubeForm = () => {
             }]
         },
     });
-    const {register, control, handleSubmit, formState: {errors}, watch} = form;
+    const {register, control, handleSubmit, formState: {errors}, getValues} = form;
     const {fields, append, remove} = useFieldArray({
         name: "phoneNumbers",
         control
     })
 
-    console.log("rerender")
-
-    useEffect(() => {
-        const subscription = watch((value) => {
-            console.log(value, "value-");
-        });
-
-        return () => subscription.unsubscribe();
-    }, [watch])
+    const handleGetValues = () => {
+        console.log("getValues", getValues("username"));
+    }
 
     const onSubmit = (data: FormValues) => {
         console.log("Form submitted", data);
@@ -144,6 +137,7 @@ export const YouTubeForm = () => {
                 </div>
 
                 <button>Submit</button>
+                <button type="button" onClick={handleGetValues}>get values</button>
             </form>
 
             <DevTool control={control}/>
