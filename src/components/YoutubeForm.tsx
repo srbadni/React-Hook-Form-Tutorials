@@ -1,4 +1,4 @@
-import {useForm} from "react-hook-form";
+import {useForm, useFieldArray} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
 
 type FormValues = {
@@ -9,7 +9,9 @@ type FormValues = {
         twitter: string,
         facebook: string,
     },
-    phoneNumbers: string[]
+    phoneNumbers: {
+        number: string
+    }[]
 };
 
 export const YouTubeForm = () => {
@@ -22,10 +24,16 @@ export const YouTubeForm = () => {
                 twitter: "",
                 facebook: ""
             },
-            phoneNumbers: ["", ""]
+            phoneNumbers: [{
+                number: ""
+            }]
         },
     });
     const {register, control, handleSubmit, formState: {errors}} = form;
+    const {fields, append, remove} = useFieldArray({
+        name: "phoneNumbers",
+        control
+    })
 
     const onSubmit = (data: FormValues) => {
         console.log("Form submitted", data);
@@ -82,14 +90,28 @@ export const YouTubeForm = () => {
                     <input type="text" id="facebook" {...register("social.facebook")} />
                 </div>
 
-                <div className="form-control">
-                    <label htmlFor="primaryNumber">primaryNumber</label>
-                    <input type="text" id="primaryNumber" {...register("phoneNumbers.0")} />
-                </div>
-
-                <div className="form-control">
-                    <label htmlFor="secondaryNumber">secondaryNumber</label>
-                    <input type="text" id="secondaryNumber" {...register("phoneNumbers.1")} />
+                <div>
+                    <label>لیست شماره تلفن ها</label>
+                    <div>
+                        {
+                            fields.map((field, index) => {
+                                return <div key={field.id} className="form-control">
+                                    <input type="text" {...register(`phoneNumbers.${index}.number`)}/>
+                                    {
+                                        index > 0 && (
+                                            <button onClick={() => remove(index)} type="button">حذف کردن</button>
+                                        )
+                                    }
+                                </div>
+                            })
+                        }
+                        <button type="button" onClick={() => {
+                            append({
+                                number: ""
+                            })
+                        }
+                        }>افزودن</button>
+                    </div>
                 </div>
 
                 <button>Submit</button>
