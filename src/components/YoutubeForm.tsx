@@ -1,4 +1,4 @@
-import {useForm, useFieldArray} from "react-hook-form";
+import {useForm, useFieldArray, FieldErrors} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
 
 type FormValues = {
@@ -33,12 +33,11 @@ export const YouTubeForm = () => {
             }]
         },
     });
-    const {register, control, handleSubmit, formState: {errors, isDirty}, getValues, setValue} = form;
+    const {register, control, handleSubmit, formState: {errors}, getValues, setValue} = form;
     const {fields, append, remove} = useFieldArray({
         name: "phoneNumbers",
         control
     })
-    console.log(isDirty)
     const handleGetValues = () => {
         console.log("getValues", getValues("username"));
     }
@@ -49,6 +48,10 @@ export const YouTubeForm = () => {
         });
     }
 
+    const onErrorHandler = (errors: FieldErrors<FormValues>) => {
+        console.log(errors, "errors")
+    }
+
     const onSubmit = (data: FormValues) => {
         console.log("Form submitted", data);
     };
@@ -57,7 +60,7 @@ export const YouTubeForm = () => {
         <div>
             <h1>YouTube Form</h1>
 
-            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <form noValidate onSubmit={handleSubmit(onSubmit, onErrorHandler)}>
                 <div className="form-control">
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" {...register("username", {
