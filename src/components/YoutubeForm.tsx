@@ -33,12 +33,12 @@ export const YouTubeForm = () => {
             }]
         },
     });
-    const {register, control, handleSubmit, formState: {errors}, getValues, setValue} = form;
+    const {register, control, handleSubmit, formState: {errors, isDirty}, getValues, setValue} = form;
     const {fields, append, remove} = useFieldArray({
         name: "phoneNumbers",
         control
     })
-
+    console.log(isDirty)
     const handleGetValues = () => {
         console.log("getValues", getValues("username"));
     }
