@@ -33,7 +33,7 @@ export const YouTubeForm = () => {
             }]
         },
     });
-    const {register, control, handleSubmit, formState: {errors}, getValues, setValue} = form;
+    const {register, control, handleSubmit, formState: {errors, isDirty, isValid}, getValues, setValue} = form;
     const {fields, append, remove} = useFieldArray({
         name: "phoneNumbers",
         control
@@ -145,7 +145,7 @@ export const YouTubeForm = () => {
                     </div>
                 </div>
 
-                <button>Submit</button>
+                <button disabled={!isDirty || !isValid} style={{background: "#20de7e"}}>Submit</button>
                 <button type="button" onClick={handleGetValues}>get values</button>
                 <button type="button" onClick={handleSetValues}>set values</button>
             </form>
