@@ -90,6 +90,11 @@ export const YouTubeForm = () => {
                             },
                             notBlockListed: (field) => {
                                 return (!field.endsWith("baddomain.com") || "غیر قابل قبول");
+                            },
+                            emailAvailable: async (fieldValue) => {
+                                const response = await fetch(`https://jsonplaceholder.typicode.com/users?email=${fieldValue}`);
+                                const data = await response.json();
+                                return data.length === 0 || "ایمیل موجود است"
                             }
                         },
                         pattern: {
@@ -156,7 +161,7 @@ export const YouTubeForm = () => {
                     </div>
                 </div>
 
-                <button disabled={!isDirty || !isValid} style={{background: "#20de7e"}}>Submit</button>
+                <button style={{background: "#20de7e"}}>Submit</button>
                 <button type="button" onClick={handleResetValues}>reset values</button>
                 <button type="button" onClick={handleGetValues}>get values</button>
                 <button type="button" onClick={handleSetValues}>set values</button>
