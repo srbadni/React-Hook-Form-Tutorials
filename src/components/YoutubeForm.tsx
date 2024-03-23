@@ -19,6 +19,7 @@ type FormValues = {
 
 export const YouTubeForm = () => {
     const form = useForm<FormValues>({
+        mode: "onTouched",
         defaultValues: {
             username: "alireza",
             email: "",
@@ -161,7 +162,7 @@ export const YouTubeForm = () => {
                     </div>
                 </div>
 
-                <button style={{background: "#20de7e"}}>Submit</button>
+                <button disabled={!isDirty || !isValid} style={{background: "#20de7e"}}>Submit</button>
                 <button type="button" onClick={handleResetValues}>reset values</button>
                 <button type="button" onClick={handleGetValues}>get values</button>
                 <button type="button" onClick={handleSetValues}>set values</button>
