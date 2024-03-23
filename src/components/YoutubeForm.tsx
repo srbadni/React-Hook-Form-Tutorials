@@ -1,5 +1,6 @@
 import {useForm, useFieldArray, FieldErrors} from "react-hook-form";
 import {DevTool} from "@hookform/devtools";
+import {useEffect} from "react";
 
 type FormValues = {
     username: string;
@@ -33,7 +34,7 @@ export const YouTubeForm = () => {
             }]
         },
     });
-    const {register, control, handleSubmit, formState: {errors, isDirty, isValid}, getValues, setValue} = form;
+    const {register, control, handleSubmit,reset, formState: {errors, isDirty, isValid, isSubmitSuccessful}, getValues, setValue} = form;
     const {fields, append, remove} = useFieldArray({
         name: "phoneNumbers",
         control
@@ -41,6 +42,16 @@ export const YouTubeForm = () => {
     const handleGetValues = () => {
         console.log("getValues", getValues("username"));
     }
+
+    const handleResetValues = () => {
+        reset()
+    }
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset();
+        }
+    }, [isSubmitSuccessful])
 
     const handleSetValues = () => {
         setValue("username", "Hamed", {
@@ -146,6 +157,7 @@ export const YouTubeForm = () => {
                 </div>
 
                 <button disabled={!isDirty || !isValid} style={{background: "#20de7e"}}>Submit</button>
+                <button type="button" onClick={handleResetValues}>reset values</button>
                 <button type="button" onClick={handleGetValues}>get values</button>
                 <button type="button" onClick={handleSetValues}>set values</button>
             </form>
