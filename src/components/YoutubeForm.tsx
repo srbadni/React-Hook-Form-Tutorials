@@ -35,7 +35,7 @@ export const YouTubeForm = () => {
             }]
         },
     });
-    const {register, control, handleSubmit,reset, formState: {errors, isDirty, isValid, isSubmitSuccessful}, getValues, setValue} = form;
+    const {register, control, handleSubmit,reset, trigger, formState: {errors, isDirty, isValid, isSubmitSuccessful}, getValues, setValue} = form;
     const {fields, append, remove} = useFieldArray({
         name: "phoneNumbers",
         control
@@ -46,6 +46,10 @@ export const YouTubeForm = () => {
 
     const handleResetValues = () => {
         reset()
+    }
+
+    const handleTriggerValues = () => {
+        trigger()
     }
 
     useEffect(() => {
@@ -164,6 +168,7 @@ export const YouTubeForm = () => {
 
                 <button disabled={!isDirty || !isValid} style={{background: "#20de7e"}}>Submit</button>
                 <button type="button" onClick={handleResetValues}>reset values</button>
+                <button type="button" onClick={handleTriggerValues}>trigger</button>
                 <button type="button" onClick={handleGetValues}>get values</button>
                 <button type="button" onClick={handleSetValues}>set values</button>
             </form>
